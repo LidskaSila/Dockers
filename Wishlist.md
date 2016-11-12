@@ -13,6 +13,9 @@ Mohu stahnout ostrou, mohu stahnout develop, mohu stahnout konkretni branch.
 Konfigurace neonu mohu mit ve svem adresari, kde to budou poustet (a asi se namapuje jako treba ./config?),
 jinak nic jineho - vse bude v dockeru.
 
+**In works**
+Mám připravenej script, kterej nasetupuje branch. Akorát je ještě rozbitej (zasekává se). Docker-compose je verzovanej, takže to je ok, akorát se musím dostat přes ten apache.
+
 
 ## React Docker
 
@@ -25,6 +28,9 @@ Tedy kdyz to pushnu, tak se spusti testovani a je videt, ze to bezi nejen u me, 
 
 Je pak take jednodussi proti tomu poustet akceptacni testy (ala uzivatel, co klika v browseru).
 
+**Teamcity**
+Když zdokumentujete, jak vaše testy pustim, můžu je přidat do našeho CI :P
+
+
 
 _no a vice samozrejme, ale to postupne_
-
