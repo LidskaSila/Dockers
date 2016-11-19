@@ -18,6 +18,8 @@ RUN apt-get install -y \
 	php7.0-xdebug \
 	php7.0-xml
 
+RUN rm -rf /var/lib/apt/lists/*
+
 # Enable Remote xdebug
 RUN echo "xdebug.remote_connect_back = 0" >> /etc/php/7.0/apache2/conf.d/20-xdebug.ini # must be disabled for remote_host to work!
 RUN echo "xdebug.idekey = PHPSTORM" >> /etc/php/7.0/apache2/conf.d/20-xdebug.ini
