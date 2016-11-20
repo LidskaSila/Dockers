@@ -15,22 +15,14 @@ RUN apt-get install -y \
 	php7.0-mcrypt \
 	php7.0-mysql \
 	php7.0-redis \
-	php7.0-xdebug \
 	php7.0-xml
+
+RUN apt-get remove -y \
+	software-properties-common
 
 RUN rm -rf /var/lib/apt/lists/*
 
-# Enable Remote xdebug
-RUN echo "xdebug.remote_connect_back = 0" >> /etc/php/7.0/apache2/conf.d/20-xdebug.ini # must be disabled for remote_host to work!
-RUN echo "xdebug.idekey = PHPSTORM" >> /etc/php/7.0/apache2/conf.d/20-xdebug.ini
-RUN echo "xdebug.remote_enable = 1" >> /etc/php/7.0/apache2/conf.d/20-xdebug.ini
-RUN echo "xdebug.remote_autostart = 0" >> /etc/php/7.0/apache2/conf.d/20-xdebug.ini
-RUN echo "xdebug.profiler_enable = 0" >> /etc/php/7.0/apache2/conf.d/20-xdebug.ini
-RUN echo "xdebug.var_display_max_depth = -1" >> /etc/php/7.0/apache2/conf.d/20-xdebug.ini
-RUN echo "xdebug.var_display_max_children = -1" >> /etc/php/7.0/apache2/conf.d/20-xdebug.ini
-RUN echo "xdebug.var_display_max_data = -1" >> /etc/php/7.0/apache2/conf.d/20-xdebug.ini
-RUN echo "xdebug.max_nesting_level = 500" >> /etc/php/7.0/apache2/conf.d/20-xdebug.ini
-RUN echo "xdebug.remote_log = /tmp/xdebug.log" >> /etc/php/7.0/apache2/conf.d/20-xdebug.ini
+RUN echo "memory_limit = 256M" >> /etc/php/7.0/cli/conf.d/40-custom.ini
 RUN echo "memory_limit = 256M" >> /etc/php/7.0/apache2/conf.d/40-custom.ini
 
 ENV APACHE_CONFDIR /etc/apache2
@@ -38,10 +30,6 @@ ENV APACHE_ENVVARS $APACHE_CONFDIR/envvars
 ENV APACHE_LOG_DIR /var/log/apache2
 
 # Configure apache
-RUN usermod www-data --append --groups root
-ENV APACHE_RUN_USER www-data
-ENV APACHE_RUN_GROUP root
-
 RUN set -ex \
 	\
 # generically convert lines like
@@ -96,15 +84,3 @@ RUN echo "ServerName localhost" | tee /etc/apache2/conf-available/servername.con
 RUN a2enconf servername
 
 RUN a2enmod rewrite
-
-## Install app
-ADD phpinfo.php /var/www/html/index.php
-ADD apache-config-local.conf /etc/apache2/sites-available/app.conf
-RUN a2ensite app
-
-EXPOSE 80 9000
-
-WORKDIR "/var/www/app"
-
-RUN apachectl restart
-CMD ["apachectl", "-D", "FOREGROUND"]
