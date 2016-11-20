@@ -3,6 +3,7 @@ FROM lidskasila-apache-base:latest
 RUN apt-get update -y
 RUN apt-get install -y \
 	openssh-server \
+	php7.0-sqlite3 \
 	php7.0-xdebug \
 	supervisor
 
@@ -44,6 +45,6 @@ EXPOSE 22 80 9000
 
 WORKDIR "/var/www/app"
 
-RUN apachectl restart
+RUN apachectl start
 
 CMD ["/usr/bin/supervisord"]

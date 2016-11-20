@@ -28,6 +28,7 @@ RUN echo "memory_limit = 256M" >> /etc/php/7.0/apache2/conf.d/40-custom.ini
 ENV APACHE_CONFDIR /etc/apache2
 ENV APACHE_ENVVARS $APACHE_CONFDIR/envvars
 ENV APACHE_LOG_DIR /var/log/apache2
+ENV APACHE_LOCK_DIR /var/lock/apache2
 
 # Configure apache
 RUN set -ex \
