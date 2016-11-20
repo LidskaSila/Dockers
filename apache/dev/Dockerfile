@@ -47,4 +47,3 @@ WORKDIR "/var/www/app"
 RUN apachectl restart
 
 CMD ["/usr/bin/supervisord"]
-CMD ["/usr/sbin/sshd", "-D"]
