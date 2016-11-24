@@ -11,7 +11,7 @@ RUN apt-get install -y \
 	git \
 	libapache2-mod-php7.0 \
 	php7.0 \	
-	php7.0-bcrypt \
+	php7.0-bcmath \
 	php7.0-curl \
 	php7.0-gd \
 	php7.0-mbstring \
