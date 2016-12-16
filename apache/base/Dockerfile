@@ -8,6 +8,7 @@ RUN LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php
 RUN apt-get update -y
 RUN apt-get install -y \
 	apache2 \
+	composer \
 	git \
 	libapache2-mod-php7.0 \
 	php7.0 \	
@@ -18,7 +19,8 @@ RUN apt-get install -y \
 	php7.0-mcrypt \
 	php7.0-mysql \
 	php7.0-redis \
-	php7.0-xml
+	php7.0-xml \
+	php7.0-zip
 
 RUN apt-get remove -y \
 	software-properties-common
