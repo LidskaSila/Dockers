@@ -18,6 +18,7 @@ RUN LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php
 RUN apt-get update
 # Install oracle-jdk7
 RUN apt-get -y install \
+	composer \
 	curl \
 	git \
 	oracle-java8-installer \
@@ -29,7 +30,10 @@ RUN apt-get -y install \
 	php7.0-mcrypt \
 	php7.0-mysql \
 	php7.0-redis \
+	php7.0-sqlite \
 	php7.0-xml \
+	php7.0-zip \
+	redis-tools \
 	unzip
 
 RUN apt-get remove -y \
