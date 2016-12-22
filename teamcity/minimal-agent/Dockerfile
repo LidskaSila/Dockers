@@ -2,7 +2,7 @@ FROM ubuntu:16.10
 
 MAINTAINER Simon Podlipsky <simon@lidskasila.cz>
 
-# Never ask for confirmations
+# Never ask for confirmations when installing Java
 ENV DEBIAN_FRONTEND noninteractive
 RUN echo "debconf shared/accepted-oracle-license-v1-1 select true" | debconf-set-selections
 RUN echo "debconf shared/accepted-oracle-license-v1-1 seen true" | debconf-set-selections
@@ -36,6 +36,10 @@ RUN apt-get -y install \
 	php7.0-zip \
 	redis-tools \
 	unzip
+
+RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
+RUN apt-get -y install \
+	nodejs
 
 RUN apt-get remove -y \
 	software-properties-common
