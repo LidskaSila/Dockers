@@ -10,26 +10,26 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
 	apache2 \
 	composer \
 	git \
-	libapache2-mod-php7.0 \
-	php7.0 \	
-	php7.0-bcmath \
-	php7.0-curl \
-	php7.0-intl \
-	php7.0-gd \
-	php7.0-mbstring \
-	php7.0-mcrypt \
-	php7.0-mysql \
-	php7.0-redis \
-	php7.0-xml \
-	php7.0-zip
+	libapache2-mod-php7.1 \
+	php7.1 \	
+	php7.1-bcmath \
+	php7.1-curl \
+	php7.1-intl \
+	php7.1-gd \
+	php7.1-mbstring \
+	php7.1-mcrypt \
+	php7.1-mysql \
+	php7.1-redis \
+	php7.1-xml \
+	php7.1-zip
 
 RUN apt-get remove -y \
 	software-properties-common
 
 RUN rm -rf /var/lib/apt/lists/*
 
-RUN echo "memory_limit = 256M" >> /etc/php/7.0/cli/conf.d/40-custom.ini
-RUN echo "memory_limit = 256M" >> /etc/php/7.0/apache2/conf.d/40-custom.ini
+RUN echo "memory_limit = 256M" >> /etc/php/7.1/cli/conf.d/40-custom.ini
+RUN echo "memory_limit = 256M" >> /etc/php/7.1/apache2/conf.d/40-custom.ini
 
 ENV APACHE_CONFDIR /etc/apache2
 ENV APACHE_ENVVARS $APACHE_CONFDIR/envvars
