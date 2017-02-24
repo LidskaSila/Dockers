@@ -3,8 +3,8 @@ FROM lidskasila-apache-base:latest
 RUN apt-get update -y
 RUN apt-get install -y \
 	openssh-server \
-	php7.0-sqlite3 \
-	php7.0-xdebug \
+	php7.1-sqlite3 \
+	php7.1-xdebug \
 	supervisor
 
 RUN rm -rf /var/lib/apt/lists/*
