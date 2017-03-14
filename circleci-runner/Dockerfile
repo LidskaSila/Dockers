@@ -5,18 +5,25 @@ RUN echo "\ndeb http://ppa.launchpad.net/ondrej/php/ubuntu xenial main\ndeb-src 
 	&& apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E5267A6C \
 	&& apt-get update \
 	&& apt-get --assume-yes install curl \
-	&& curl -sL https://deb.nodesource.com/setup_6.x | bash - \
-	&& apt-get --assume-yes install php7.1-redis \
-	&& apt-get --assume-yes install \
-		nodejs \
-		git \
+	&& curl -sL https://deb.nodesource.com/setup_6.x | bash -
+RUN apt-get --assume-yes install \
+	    php7.1-redis
+RUN apt-get --assume-yes install \
 		composer \
-		php-gd php-curl php-mysql php-mbstring \
+		git \
+		mysql-client \
+		mysql-utilities
+RUN apt-get --assume-yes install \
+		netcat \
+		nodejs \
+		ocaml libelf-dev
+RUN apt-get --assume-yes install \
 		php-bcmath \
+		php-curl \
+		php-gd \
+		php-intl \
+		php-mbstring \
+		php-mysql \
 		php-xml \
 		php-zip \
-		mysql-client \
-		netcat \
-		ocaml libelf-dev \
-		php-intl \
-	&& npm install -g yarn
+    && npm install -g yarn
