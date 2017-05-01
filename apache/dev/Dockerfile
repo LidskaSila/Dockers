@@ -2,17 +2,29 @@ FROM lidskasila-apache-base:latest
 
 RUN apt-get update -y
 RUN apt-get install -y \
+    apt-transport-https \
+    curl \
 	openssh-server \
 	php7.1-sqlite3 \
 	php7.1-xdebug \
 	supervisor
 
+# Install yarn and npm
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN curl -sL https://deb.nodesource.com/setup_7.x | bash -
+
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+RUN apt-get update -y
+RUN apt-get install -y \
+    nodejs \
+	yarn
+
 RUN rm -rf /var/lib/apt/lists/*
 
 # Enable Remote xdebug
 # xdebug.remote_connect_back must be disabled for remote_host to work!
-ADD xdebug_setup.ini /etc/php/7.0/apache2/conf.d/xdebug_setup.ini
-ADD xdebug_setup.ini /etc/php/7.0/cli/conf.d/xdebug_setup.ini
+ADD xdebug_setup.ini /etc/php/7.1/apache2/conf.d/xdebug_setup.ini
+ADD xdebug_setup.ini /etc/php/7.1/cli/conf.d/xdebug_setup.ini
 
 ENV PHP_IDE_CONFIG serverName=localhost.lidskasila.cz
 
@@ -26,6 +38,7 @@ ADD phpinfo.php /var/www/html/index.php
 ADD apache-config.conf /etc/apache2/sites-available/app.conf
 RUN a2ensite app
 
+RUN echo "max_execution_time = -1" >> /etc/php/7.1/apache2/conf.d/40-custom.ini
 
 #Setup OpenSSH and Supervisor
 RUN mkdir -p /var/run/sshd /var/log/supervisor
