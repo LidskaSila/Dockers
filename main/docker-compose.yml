@@ -13,6 +13,7 @@ services:
             - "9000"
         links:
             - mysql
+            - redis
         volumes_from: [ shared-volumes ]
         environment:
             PHP_DEBUGGER: none
@@ -37,3 +38,7 @@ services:
                 DB_DUMP_FILE: ${DB_DUMP_FILE}
         environment:
             MYSQL_ALLOW_EMPTY_PASSWORD: 1
+    redis:
+        image: redis:alpine
+        ports:
+            - "6379:6379"
