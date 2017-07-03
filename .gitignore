@@ -82,3 +82,5 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+main/.env
+main/mysql/dump.sql

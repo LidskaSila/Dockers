@@ -1,0 +1,37 @@
+version: '2'
+
+services:
+    shared-volumes:
+        image: tianon/true
+        volumes:
+            - "${LS_WWW_ROOT}:/web/lidskasila"
+            - "./phpinfo.php:/web/phpinfo/index.php"
+
+    php-fpm:
+        image: webdevops/php-dev:7.1
+        expose:
+            - "9000"
+        links:
+            - mysql
+        volumes_from: [ shared-volumes ]
+        environment:
+            PHP_DEBUGGER: none
+    apache:
+        image: webdevops/apache:alpine
+        ports:
+            - "80:80"
+        links:
+            - php-fpm
+        environment:
+            WEB_PHP_SOCKET: php-fpm:9000
+            WEB_DOCUMENT_ROOT: /web/phpinfo
+        volumes_from: [ shared-volumes ]
+        depends_on:
+            - php-fpm
+    mysql:
+        build:
+            context: ./mysql
+            args:
+                DB_DUMP_FILE: ${DB_DUMP_FILE}
+        environment:
+            MYSQL_ALLOW_EMPTY_PASSWORD: 1
