@@ -13,6 +13,9 @@ parameters:
 		default:
 			host: mysql
 
+	rabbitmq:
+		host: rabbit
+
 redis:
 	host: redis
 ```
