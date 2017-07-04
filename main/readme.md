@@ -1,4 +1,4 @@
-Quickstart:
+# Quickstart
 
 - Copy `.env.dist` to `.env`, edit `LS_WWW_ROOT` with path to the Main project
 - Copy current DB dump to `./mysql/dump.sql`
@@ -19,3 +19,8 @@ parameters:
 redis:
 	host: redis
 ```
+
+# DB to RAM
+
+- Increase memory limit of the Docker Machine in VirtualBox at least to 5 GB.
+- Run `docker-compose exec mysql db-to-ram`

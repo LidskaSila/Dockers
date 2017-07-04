@@ -17,6 +17,7 @@ services:
         volumes_from: [ shared-volumes ]
         environment:
             PHP_DEBUGGER: none
+        working_dir: /web/lidskasila
     apache:
         image: webdevops/apache:alpine
         ports:
@@ -38,6 +39,7 @@ services:
                 DB_DUMP_FILE: ${DB_DUMP_FILE}
         environment:
             MYSQL_ALLOW_EMPTY_PASSWORD: 1
+        privileged: true
     redis:
         image: redis:alpine
         ports:

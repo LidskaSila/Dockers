@@ -28,9 +28,20 @@ ENV MYSQL_ALLOW_EMPTY_PASSWORD 1
 ENV MYSQL_DATABASE lidskasila
 RUN /dbinit.sh mysqld
 
-# Clean up
-RUN rm /docker-entrypoint-initdb.d/${DB_DUMP_FILE} /dbinit.sh
+# RAM-disk
+COPY db-to-ram.sh /usr/bin/db-to-ram
+RUN mkdir /db-ram && \
+	chmod +x /usr/bin/db-to-ram
 
-CMD ["mysqld"]
+# supervisord
+RUN apt-get update && \
+	apt-get install -y supervisor
+COPY supervisord.conf /etc/supervisor/conf.d/mysql.conf
+
+# Clean up
+RUN rm /docker-entrypoint-initdb.d/${DB_DUMP_FILE} /dbinit.sh && \
+	apt-get clean
+
+CMD ["supervisord", "--nodaemon"]
 
 EXPOSE 3306
