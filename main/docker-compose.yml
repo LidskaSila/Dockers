@@ -16,8 +16,14 @@ services:
             - redis
         volumes_from: [ shared-volumes ]
         environment:
-            PHP_DEBUGGER: none
+            PHP_DEBUGGER: ${PHP_DEBUGGER}
+            BLACKFIRE_SERVER_ID: ${BLACKFIRE_SERVER_ID}
+            BLACKFIRE_SERVER_TOKEN: ${BLACKFIRE_SERVER_TOKEN}
+            XDEBUG_PROFILER_ENABLE: 1
+            XDEBUG_REMOTE_CONNECT_BACK: 1
+            XDEBUG_PROFILER_ENABLE: 0
         working_dir: /web/lidskasila
+
     apache:
         image: webdevops/apache:alpine
         ports:
@@ -32,6 +38,7 @@ services:
             - "./vhost.conf:/opt/docker/etc/httpd/vhost.conf"
         depends_on:
             - php
+
     mysql:
         build:
             context: ./mysql
@@ -40,10 +47,12 @@ services:
         environment:
             MYSQL_ALLOW_EMPTY_PASSWORD: 1
         privileged: true
+
     redis:
         image: redis:alpine
         ports:
             - "6379:6379"
+
     rabbit:
         image: rabbitmq:management-alpine
         ports:
