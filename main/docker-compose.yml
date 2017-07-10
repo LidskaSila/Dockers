@@ -50,3 +50,5 @@ services:
             - "5672:5672"
             - "15672:15672"
             - "15671:15671"
+        volumes:
+            - "./rabbit/definitions.json:/etc/rabbitmq/definitions.json"

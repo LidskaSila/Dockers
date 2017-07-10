@@ -1,0 +1,39 @@
+{
+  "rabbit_version" : "3.5.3",
+  "users" : [
+	{
+	  "name" : "guest",
+	  "password_hash" : "m8PefsW4FcXeHN8M4B8OCAxHdao=",
+	  "tags" : "administrator"
+	}
+  ],
+  "vhosts" : [
+	{
+	  "name" : "/"
+	},
+	{
+	  "name" : "/lidskasila"
+	}
+  ],
+  "permissions" : [
+	{
+	  "user" : "guest",
+	  "vhost" : "/",
+	  "configure" : ".*",
+	  "write" : ".*",
+	  "read" : ".*"
+	},
+	{
+	  "user" : "guest",
+	  "vhost" : "/lidskasila",
+	  "configure" : ".*",
+	  "write" : ".*",
+	  "read" : ".*"
+	}
+  ],
+  "parameters" : [ ],
+  "policies" : [ ],
+  "queues" : [ ],
+  "exchanges" : [ ],
+  "bindings" : [ ]
+}
