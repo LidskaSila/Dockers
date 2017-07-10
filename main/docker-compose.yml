@@ -7,7 +7,7 @@ services:
             - "${LS_WWW_ROOT}:/web/lidskasila"
             - "./phpinfo.php:/web/phpinfo/index.php"
 
-    php-fpm:
+    php:
         image: webdevops/php-dev:7.1
         expose:
             - "9000"
@@ -23,15 +23,15 @@ services:
         ports:
             - "80:80"
         links:
-            - php-fpm
+            - php
         environment:
-            WEB_PHP_SOCKET: php-fpm:9000
+            WEB_PHP_SOCKET: php:9000
             WEB_DOCUMENT_ROOT: /web/phpinfo
         volumes_from: [ shared-volumes ]
         volumes:
             - "./vhost.conf:/opt/docker/etc/httpd/vhost.conf"
         depends_on:
-            - php-fpm
+            - php
     mysql:
         build:
             context: ./mysql
