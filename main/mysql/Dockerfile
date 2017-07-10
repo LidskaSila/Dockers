@@ -38,6 +38,9 @@ RUN apt-get update && \
 	apt-get install -y supervisor
 COPY supervisord.conf /etc/supervisor/conf.d/mysql.conf
 
+# Grant access from everywhere
+RUN mysql -u root --execute="GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '' WITH GRANT OPTION;"
+
 # Clean up
 RUN rm /docker-entrypoint-initdb.d/${DB_DUMP_FILE} /dbinit.sh && \
 	apt-get clean

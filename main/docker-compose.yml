@@ -47,6 +47,8 @@ services:
         environment:
             MYSQL_ALLOW_EMPTY_PASSWORD: 1
         privileged: true
+        ports:
+            - "3306:3306"
 
     redis:
         image: redis:alpine
