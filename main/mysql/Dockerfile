@@ -42,6 +42,7 @@ COPY supervisord.conf /etc/supervisor/conf.d/mysql.conf
 RUN rm /docker-entrypoint-initdb.d/${DB_DUMP_FILE} /dbinit.sh && \
 	apt-get clean
 
-CMD ["supervisord", "--nodaemon"]
+COPY start.sh /start.sh
+CMD ["/start.sh"]
 
 EXPOSE 3306
