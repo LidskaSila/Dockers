@@ -1,9 +1,10 @@
 {
-  "rabbit_version" : "3.5.3",
+  "rabbit_version" : "3.6.10",
   "users" : [
 	{
 	  "name" : "guest",
 	  "password_hash" : "m8PefsW4FcXeHN8M4B8OCAxHdao=",
+	  "hashing_algorithm" : "rabbit_password_hashing_md5",
 	  "tags" : "administrator"
 	}
   ],
@@ -18,22 +19,259 @@
   "permissions" : [
 	{
 	  "user" : "guest",
-	  "vhost" : "/",
+	  "vhost" : "/lidskasila",
 	  "configure" : ".*",
 	  "write" : ".*",
 	  "read" : ".*"
 	},
 	{
 	  "user" : "guest",
-	  "vhost" : "/lidskasila",
+	  "vhost" : "/",
 	  "configure" : ".*",
 	  "write" : ".*",
 	  "read" : ".*"
 	}
   ],
   "parameters" : [ ],
+  "global_parameters" : [
+	{
+	  "name" : "cluster_name",
+	  "value" : "rabbit@ef4b8b34ac2c"
+	}
+  ],
   "policies" : [ ],
-  "queues" : [ ],
-  "exchanges" : [ ],
-  "bindings" : [ ]
+  "queues" : [
+	{
+	  "name" : "maintainAvailabilityRequests",
+	  "vhost" : "/lidskasila",
+	  "durable" : true,
+	  "auto_delete" : false,
+	  "arguments" : { }
+	},
+	{
+	  "name" : "payoutsUpdate",
+	  "vhost" : "/lidskasila",
+	  "durable" : true,
+	  "auto_delete" : false,
+	  "arguments" : { }
+	},
+	{
+	  "name" : "mixpanel",
+	  "vhost" : "/lidskasila",
+	  "durable" : true,
+	  "auto_delete" : false,
+	  "arguments" : { }
+	},
+	{
+	  "name" : "messaging.low",
+	  "vhost" : "/lidskasila",
+	  "durable" : true,
+	  "auto_delete" : false,
+	  "arguments" : { }
+	},
+	{
+	  "name" : "zendeskUser",
+	  "vhost" : "/lidskasila",
+	  "durable" : true,
+	  "auto_delete" : false,
+	  "arguments" : { }
+	},
+	{
+	  "name" : "workerRewarding",
+	  "vhost" : "/lidskasila",
+	  "durable" : true,
+	  "auto_delete" : false,
+	  "arguments" : { }
+	},
+	{
+	  "name" : "availabilityUpdate.high",
+	  "vhost" : "/lidskasila",
+	  "durable" : true,
+	  "auto_delete" : false,
+	  "arguments" : { }
+	},
+	{
+	  "name" : "zendeskTicket.high",
+	  "vhost" : "/lidskasila",
+	  "durable" : true,
+	  "auto_delete" : false,
+	  "arguments" : { }
+	},
+	{
+	  "name" : "zendeskTicket.low",
+	  "vhost" : "/lidskasila",
+	  "durable" : true,
+	  "auto_delete" : false,
+	  "arguments" : { }
+	},
+	{
+	  "name" : "availabilityUpdate.low",
+	  "vhost" : "/lidskasila",
+	  "durable" : true,
+	  "auto_delete" : false,
+	  "arguments" : { }
+	},
+	{
+	  "name" : "messaging.high",
+	  "vhost" : "/lidskasila",
+	  "durable" : true,
+	  "auto_delete" : false,
+	  "arguments" : { }
+	},
+	{
+	  "name" : "promoterIo",
+	  "vhost" : "/lidskasila",
+	  "durable" : true,
+	  "auto_delete" : false,
+	  "arguments" : { }
+	},
+	{
+	  "name" : "precomputeWorkerCalendarEvent",
+	  "vhost" : "/lidskasila",
+	  "durable" : true,
+	  "auto_delete" : false,
+	  "arguments" : { }
+	},
+	{
+	  "name" : "messaging.normal",
+	  "vhost" : "/lidskasila",
+	  "durable" : true,
+	  "auto_delete" : false,
+	  "arguments" : { }
+	}
+  ],
+  "exchanges" : [
+	{
+	  "name" : "lidskaSila",
+	  "vhost" : "/lidskasila",
+	  "type" : "direct",
+	  "durable" : true,
+	  "auto_delete" : false,
+	  "internal" : false,
+	  "arguments" : { }
+	},
+	{
+	  "name" : "graphQL",
+	  "vhost" : "/lidskasila",
+	  "type" : "direct",
+	  "durable" : true,
+	  "auto_delete" : false,
+	  "internal" : false,
+	  "arguments" : { }
+	}
+  ],
+  "bindings" : [
+	{
+	  "source" : "lidskaSila",
+	  "vhost" : "/lidskasila",
+	  "destination" : "availabilityUpdate.high",
+	  "destination_type" : "queue",
+	  "routing_key" : "availabilityUpdate.high",
+	  "arguments" : { }
+	},
+	{
+	  "source" : "lidskaSila",
+	  "vhost" : "/lidskasila",
+	  "destination" : "availabilityUpdate.low",
+	  "destination_type" : "queue",
+	  "routing_key" : "availabilityUpdate.low",
+	  "arguments" : { }
+	},
+	{
+	  "source" : "lidskaSila",
+	  "vhost" : "/lidskasila",
+	  "destination" : "maintainAvailabilityRequests",
+	  "destination_type" : "queue",
+	  "routing_key" : "maintainAvailabilityRequests",
+	  "arguments" : { }
+	},
+	{
+	  "source" : "lidskaSila",
+	  "vhost" : "/lidskasila",
+	  "destination" : "messaging.high",
+	  "destination_type" : "queue",
+	  "routing_key" : "messaging.high",
+	  "arguments" : { }
+	},
+	{
+	  "source" : "lidskaSila",
+	  "vhost" : "/lidskasila",
+	  "destination" : "messaging.low",
+	  "destination_type" : "queue",
+	  "routing_key" : "messaging.low",
+	  "arguments" : { }
+	},
+	{
+	  "source" : "lidskaSila",
+	  "vhost" : "/lidskasila",
+	  "destination" : "messaging.normal",
+	  "destination_type" : "queue",
+	  "routing_key" : "messaging.normal",
+	  "arguments" : { }
+	},
+	{
+	  "source" : "lidskaSila",
+	  "vhost" : "/lidskasila",
+	  "destination" : "mixpanel",
+	  "destination_type" : "queue",
+	  "routing_key" : "mixpanel",
+	  "arguments" : { }
+	},
+	{
+	  "source" : "lidskaSila",
+	  "vhost" : "/lidskasila",
+	  "destination" : "payoutsUpdate",
+	  "destination_type" : "queue",
+	  "routing_key" : "payoutsUpdate",
+	  "arguments" : { }
+	},
+	{
+	  "source" : "lidskaSila",
+	  "vhost" : "/lidskasila",
+	  "destination" : "precomputeWorkerCalendarEvent",
+	  "destination_type" : "queue",
+	  "routing_key" : "precomputeWorkerCalendarEvent",
+	  "arguments" : { }
+	},
+	{
+	  "source" : "lidskaSila",
+	  "vhost" : "/lidskasila",
+	  "destination" : "promoterIo",
+	  "destination_type" : "queue",
+	  "routing_key" : "promoterIo",
+	  "arguments" : { }
+	},
+	{
+	  "source" : "lidskaSila",
+	  "vhost" : "/lidskasila",
+	  "destination" : "workerRewarding",
+	  "destination_type" : "queue",
+	  "routing_key" : "workerRewarding",
+	  "arguments" : { }
+	},
+	{
+	  "source" : "lidskaSila",
+	  "vhost" : "/lidskasila",
+	  "destination" : "zendeskTicket.high",
+	  "destination_type" : "queue",
+	  "routing_key" : "zendeskTicket.high",
+	  "arguments" : { }
+	},
+	{
+	  "source" : "lidskaSila",
+	  "vhost" : "/lidskasila",
+	  "destination" : "zendeskTicket.low",
+	  "destination_type" : "queue",
+	  "routing_key" : "zendeskTicket.low",
+	  "arguments" : { }
+	},
+	{
+	  "source" : "lidskaSila",
+	  "vhost" : "/lidskasila",
+	  "destination" : "zendeskUser",
+	  "destination_type" : "queue",
+	  "routing_key" : "zendeskUser",
+	  "arguments" : { }
+	}
+  ]
 }
