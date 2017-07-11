@@ -1,0 +1,65 @@
+version: '2'
+
+services:
+    shared-volumes:
+        image: tianon/true
+        volumes:
+            - "${LS_WWW_ROOT}:/web/lidskasila"
+            - "./phpinfo.php:/web/phpinfo/index.php"
+
+    php:
+        image: webdevops/php-dev:7.1
+        expose:
+            - "9000"
+        links:
+            - mysql
+            - redis
+        volumes_from: [ shared-volumes ]
+        environment:
+            PHP_DEBUGGER: ${PHP_DEBUGGER}
+            BLACKFIRE_SERVER_ID: ${BLACKFIRE_SERVER_ID}
+            BLACKFIRE_SERVER_TOKEN: ${BLACKFIRE_SERVER_TOKEN}
+            XDEBUG_PROFILER_ENABLE: 1
+            XDEBUG_REMOTE_CONNECT_BACK: 1
+            XDEBUG_PROFILER_ENABLE: 0
+        working_dir: /web/lidskasila
+
+    apache:
+        image: webdevops/apache:alpine
+        ports:
+            - "80:80"
+        links:
+            - php
+        environment:
+            WEB_PHP_SOCKET: php:9000
+            WEB_DOCUMENT_ROOT: /web/phpinfo
+        volumes_from: [ shared-volumes ]
+        volumes:
+            - "./vhost.conf:/opt/docker/etc/httpd/vhost.conf"
+        depends_on:
+            - php
+
+    mysql:
+        build:
+            context: ./mysql
+            args:
+                DB_DUMP_FILE: ${DB_DUMP_FILE}
+        environment:
+            MYSQL_ALLOW_EMPTY_PASSWORD: 1
+        privileged: true
+        ports:
+            - "3306:3306"
+
+    redis:
+        image: redis:alpine
+        ports:
+            - "6379:6379"
+
+    rabbit:
+        image: rabbitmq:management-alpine
+        ports:
+            - "5672:5672"
+            - "15672:15672"
+            - "15671:15671"
+        volumes:
+            - "./rabbit/definitions.json:/etc/rabbitmq/definitions.json"
