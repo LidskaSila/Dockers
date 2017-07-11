@@ -70,3 +70,4 @@ docker-compose exec php bash
 
 - Use the host system for heavy disk operations (like `composer install` or `git`).
 - Use DB in memory.
+- Possible solution for slow filesystem sync: Instead of mounting the project's directory from the host, copy the whole project into a container, add an FTP server (eg. [webdevops/vsftp](https://dockerfile.readthedocs.io/en/latest/content/DockerImages/dockerfiles/vsftp.html)) and use your IDE's FTP synchronization.
